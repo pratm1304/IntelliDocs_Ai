@@ -1,0 +1,146 @@
+# Gemini-Powered Code Generator
+
+**Description:**
+
+This project utilizes Google's Gemini API to generate code based on user input.  It provides a simple Flask-based API for submitting prompts and receiving generated code. The application also includes features for managing temporary project files, ensuring a clean and secure environment for code generation.
+
+
+**Tech Stack:**
+
+* Python
+* Flask
+* Flask-CORS
+* Google Gemini API
+* GitPython (for potential future git integration, currently unused)
+* Werkzeug
+* `python-dotenv`
+
+
+**Features:**
+
+* **Gemini API Integration:**  Leverages the power of Google's Gemini for code generation.
+* **RESTful API:**  Provides a simple and accessible API endpoint for code generation requests.
+* **Secure File Handling:** Uses `werkzeug.utils.secure_filename` to prevent directory traversal vulnerabilities.
+* **Error Handling:** Includes robust error handling to gracefully manage exceptions.
+* **Clean Up:**  Automatically removes temporary project files after processing.
+
+
+**Installation & Setup:**
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository_url>
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Create a `.env` file:**  Create a file named `.env` in the project's root directory. Add your Gemini API key:
+   ```
+   GEMINI_API_KEY=<your_gemini_api_key>
+   ```
+
+4. **Run the application:**
+   ```bash
+   python app.py
+   ```
+
+**Usage:**
+
+The application exposes a single API endpoint: `/generate`.  To generate code, send a POST request to this endpoint with a JSON payload containing the `prompt` key:
+
+```json
+{
+  "prompt": "Write a Python function that calculates the factorial of a number."
+}
+```
+
+The response will be a JSON object containing the generated code:
+
+```json
+{
+  "code": "def factorial(n):\n  if n == 0:\n    return 1\n  else:\n    return n * factorial(n-1)"
+}
+```
+
+
+**Note:** This application requires a valid Gemini API key.  You need to obtain one from Google Cloud before running the application.  The current implementation uses `gemini-1.5-flash` model; this might be changed in future versions.  Remember to replace `<your_gemini_api_key>` with your actual API key.  Error handling is in place, but always check the logs for potential issues. The GitPython library is included for potential future expansion but is currently not used in the core functionality.
+
+
+# Real-Time Collaborative Quiz App
+
+## Project Overview
+
+This project implements a real-time, collaborative quiz application allowing users to create, join, and participate in quizzes simultaneously.  The application addresses the need for engaging and interactive quiz experiences, particularly in educational or entertainment settings. The target users are educators, event organizers, or anyone looking to create and host interactive quizzes for groups.  The application provides a central hub for quiz creation, room management, and real-time score tracking, enhancing user engagement and competition.
+
+
+## Key Features
+
+* **Real-time quiz participation:** Multiple users can join a quiz room and answer questions concurrently.
+* **Centralized leaderboard:** Tracks scores in real-time, fostering friendly competition.
+* **Quiz creation and management:**  Users can easily create and customize quizzes with multiple-choice questions.
+* **Room-based interaction:** Quizzes are conducted in separate rooms, enabling multiple simultaneous quizzes.
+* **Simple and intuitive user interface:** Designed for easy navigation and quick participation.
+
+
+## Tech Stack
+
+| Technology         | Version      | Description                               |
+|----------------------|---------------|-------------------------------------------|
+| Node.js            | (latest LTS)  | Server-side JavaScript runtime environment |
+| Express.js          | ^5.1.0        | Web application framework                 |
+| Socket.IO           | ^4.8.1        | Real-time communication library           |
+| HTML               |                | Front-end markup language                |
+| CSS                |                | Stylesheet language for styling           |
+
+
+## Project Structure
+
+The project follows a simple structure:
+
+* **`Live_Quiz_App/`**: The root directory containing all project files.
+    * **`index.html`**: The main HTML file for the client-side interface.  Contains the basic structure and styling.
+    * **`package-lock.json`**:  npm package dependency file. Tracks specific versions of dependencies.
+    * **`package.json`**:  npm package configuration file, listing dependencies and scripts.
+    * **`server.js`**: The Node.js server file handling quiz logic, Socket.IO communication, and static file serving.
+
+
+## Setup and Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository_url>
+   ```
+2. **Navigate to the project directory:**
+   ```bash
+   cd Live_Quiz_App
+   ```
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+4. **Run the server:**
+   ```bash
+   node server.js
+   ```
+   The application will be accessible at `http://localhost:3000` (or the port specified in `server.js`).
+
+
+## Usage
+
+After installation and running the server, open your web browser and navigate to `http://localhost:3000`. The application provides an intuitive interface for creating and joining quizzes. Create a quiz by providing a title and questions.  Share the generated room code with other participants, who can then join the quiz using that code. Once enough players have joined, the host can start the quiz.
+
+
+## Code Explanation
+
+The `server.js` file utilizes Express.js to create a web server and Socket.IO for real-time communication.  The `quizzes` and `rooms` objects act as an in-memory database (in a production environment, a persistent database would be necessary).  The `io.on('connection', ...)` section handles socket connections, enabling real-time updates and communication between the server and clients.  For example, when a user submits an answer, a socket event is emitted to update the scores on the leaderboard.
+
+The `index.html` file demonstrates basic HTML structuring and utilizes external CSS for a clean design. The use of Google Fonts provides a consistent and modern visual presentation.
+
+
+
+## API Endpoints (if applicable)
+
+This application uses Socket.IO for real-time communication, not traditional RESTful API endpoints.  Therefore, there are no API endpoints in the traditional sense.  Socket.IO events handle communication between the client and server.  Examples include events for joining a room, submitting answers, and updating the leaderboard.  These events are handled within the `io.on('connection', ...)` block in `server.js`.
